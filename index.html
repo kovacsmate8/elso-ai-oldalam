@@ -3,197 +3,435 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bemutatkozó Weboldal</title>
+    <title>Portfolio — Neved</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <style>
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'IBM Plex Mono', monospace;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        .display-font {
+            font-family: 'Archivo Black', sans-serif;
+            letter-spacing: -0.02em;
+        }
+        
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        
+        .card {
+            border: 2px solid #fff;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 0;
+        }
+        
+        .card:hover::before {
+            left: 0;
+        }
+        
+        .card:hover {
+            color: #000;
+        }
+        
+        .card-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .square {
+            aspect-ratio: 1;
+        }
+        
+        .fade-in {
+            animation: fadeIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
             }
+        }
+        
+        .slide-up {
+            animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        
+        @keyframes slideUp {
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
         
-        .fade-in-up {
-            animation: fadeInUp 0.6s ease-out forwards;
+        .geometric-element {
+            position: absolute;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .card-hover {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        input, textarea {
+            background: transparent;
+            border: 2px solid #fff;
+            color: #fff;
+            font-family: 'IBM Plex Mono', monospace;
+            transition: all 0.3s;
         }
         
-        .card-hover:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        input:focus, textarea:focus {
+            outline: none;
+            background: #fff;
+            color: #000;
+        }
+        
+        input::placeholder, textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        input:focus::placeholder, textarea:focus::placeholder {
+            color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .btn {
+            border: 2px solid #fff;
+            background: transparent;
+            color: #fff;
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 0;
+        }
+        
+        .btn:hover::before {
+            left: 0;
+        }
+        
+        .btn:hover {
+            color: #000;
+        }
+        
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .text-outline {
+            -webkit-text-stroke: 2px #fff;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav a {
+            position: relative;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #fff;
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        @media (max-width: 768px) {
+            .display-font {
+                font-size: 2.5rem !important;
+            }
         }
     </style>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'spin-slow': 'spin 20s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="grid-bg">
 
-    <!-- Navigáció -->
-    <nav class="bg-gray-900 text-white sticky top-0 z-50 shadow-lg">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex justify-between items-center">
-                <h1 class="text-2xl font-bold">Neved</h1>
-                <ul class="flex space-x-8">
-                    <li><a href="#rolam" class="hover:text-blue-400 transition">Rólam</a></li>
-                    <li><a href="#szolgaltatasok" class="hover:text-blue-400 transition">Szolgáltatások</a></li>
-                    <li><a href="#kapcsolat" class="hover:text-blue-400 transition">Kapcsolat</a></li>
-                </ul>
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
+            <div class="display-font text-xl">NEVED</div>
+            <div class="flex gap-8 text-sm uppercase tracking-wider">
+                <a href="#work" class="hover:opacity-60 transition">Work</a>
+                <a href="#about" class="hover:opacity-60 transition">About</a>
+                <a href="#contact" class="hover:opacity-60 transition">Contact</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Szekció -->
-    <section class="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-32">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-5xl md:text-6xl font-bold mb-4 fade-in-up">Üdvözöllek a weboldalamon!</h2>
-            <p class="text-xl md:text-2xl mb-8 fade-in-up" style="animation-delay: 0.2s;">Professzionális megoldások az Ön igényeire</p>
-            <a href="#kapcsolat" class="inline-block bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition fade-in-up" style="animation-delay: 0.4s;">Vedd fel a kapcsolatot</a>
+    <!-- Geometric Background Elements -->
+    <div class="geometric-element w-64 h-64 top-20 right-10 square animate-spin-slow hidden md:block"></div>
+    <div class="geometric-element w-32 h-32 bottom-40 left-20 square hidden md:block"></div>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center relative px-6 pt-20">
+        <div class="max-w-6xl mx-auto text-center">
+            <h1 class="display-font text-7xl md:text-9xl mb-8 fade-in leading-none">
+                EGYSZERŰSÍTSD<br>
+                <span class="text-outline">A KOMPLEXET</span>
+            </h1>
+            <p class="text-lg md:text-xl mb-12 fade-in uppercase tracking-widest" style="animation-delay: 0.2s;">
+                Visual Designer — Creative Director
+            </p>
+            <a href="#work" class="btn px-8 py-4 inline-block fade-in" style="animation-delay: 0.4s;">
+                <span>Nézd meg a munkáim</span>
+            </a>
         </div>
     </section>
 
-    <!-- Rólam Szekció -->
-    <section id="rolam" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center gap-12">
-                <div class="md:w-1/3">
-                    <img src="https://via.placeholder.com/400x400/3B82F6/FFFFFF?text=Profilkép" alt="Profilkép" class="rounded-full shadow-2xl w-full max-w-sm mx-auto">
+    <!-- Work Section -->
+    <section id="work" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="display-font text-5xl md:text-7xl mb-20 slide-up">
+                SELECTED<br>WORK
+            </h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Project 1 -->
+                <div class="card p-12 slide-up" style="animation-delay: 0.1s;">
+                    <div class="card-content">
+                        <div class="text-sm uppercase tracking-wider mb-4 opacity-60">001</div>
+                        <h3 class="display-font text-3xl mb-4">VISUALIZE<br>VALUE</h3>
+                        <p class="text-sm mb-6 leading-relaxed">
+                            Komplex ötletek egyszerű vizuális formában. 
+                            Fekete-fehér minimalista design rendszer.
+                        </p>
+                        <div class="flex gap-3 text-xs uppercase tracking-wider opacity-60">
+                            <span>Branding</span>
+                            <span>•</span>
+                            <span>Visual Design</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="md:w-2/3">
-                    <h2 class="text-4xl font-bold mb-6 text-gray-900">Rólam</h2>
-                    <p class="text-lg text-gray-700 mb-4 leading-relaxed">
-                        Üdvözlöm! A nevem <strong>Neved</strong>, és több mint 5 éve dolgozom a szakterületemen. 
-                        Szenvedélyem a minőségi munka és az ügyfelek elégedettsége.
-                    </p>
-                    <p class="text-lg text-gray-700 mb-4 leading-relaxed">
-                        Tapasztalatom során számos projektben vettem részt, és mindig arra törekszem, 
-                        hogy a legjobb eredményt érjem el. Célom, hogy partnereimnek személyre szabott, 
-                        innovatív megoldásokat kínáljak.
-                    </p>
-                    <p class="text-lg text-gray-700 leading-relaxed">
-                        Ha szeretnél többet megtudni a munkámról, vagy közös projekten gondolkodsz, 
-                        lépj kapcsolatba velem!
-                    </p>
+
+                <!-- Project 2 -->
+                <div class="card p-12 slide-up" style="animation-delay: 0.2s;">
+                    <div class="card-content">
+                        <div class="text-sm uppercase tracking-wider mb-4 opacity-60">002</div>
+                        <h3 class="display-font text-3xl mb-4">SYSTEMS<br>THINKING</h3>
+                        <p class="text-sm mb-6 leading-relaxed">
+                            Stratégiai gondolkodás vizualizálása. 
+                            Geometrikus formák és tiszta vonalak.
+                        </p>
+                        <div class="flex gap-3 text-xs uppercase tracking-wider opacity-60">
+                            <span>Strategy</span>
+                            <span>•</span>
+                            <span>Illustration</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="card p-12 slide-up" style="animation-delay: 0.3s;">
+                    <div class="card-content">
+                        <div class="text-sm uppercase tracking-wider mb-4 opacity-60">003</div>
+                        <h3 class="display-font text-3xl mb-4">DIGITAL<br>PRODUCTS</h3>
+                        <p class="text-sm mb-6 leading-relaxed">
+                            Digitális termékek és szolgáltatások tervezése. 
+                            Funkció és forma tökéletes harmóniája.
+                        </p>
+                        <div class="flex gap-3 text-xs uppercase tracking-wider opacity-60">
+                            <span>UX/UI</span>
+                            <span>•</span>
+                            <span>Product Design</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="card p-12 slide-up" style="animation-delay: 0.4s;">
+                    <div class="card-content">
+                        <div class="text-sm uppercase tracking-wider mb-4 opacity-60">004</div>
+                        <h3 class="display-font text-3xl mb-4">BRAND<br>IDENTITY</h3>
+                        <p class="text-sm mb-6 leading-relaxed">
+                            Erős, emlékezetes márkák építése. 
+                            Konzisztens vizuális kommunikáció.
+                        </p>
+                        <div class="flex gap-3 text-xs uppercase tracking-wider opacity-60">
+                            <span>Branding</span>
+                            <span>•</span>
+                            <span>Identity</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Szolgáltatások Szekció -->
-    <section id="szolgaltatasok" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-16 text-gray-900">Szolgáltatásaim</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                
-                <!-- Szolgáltatás 1 -->
-                <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
-                    <div class="bg-blue-500 text-white w-16 h-16 rounded-full flex items-center justify-center mb-6 text-2xl font-bold">
-                        1
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4 text-gray-900">Webfejlesztés</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        Modern, reszponzív weboldalak készítése a legújabb technológiák felhasználásával. 
-                        Egyedi design és optimalizált teljesítmény.
+    <!-- Philosophy Section -->
+    <section class="py-32 px-6 border-y border-white/10">
+        <div class="max-w-4xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="display-font text-5xl md:text-6xl mb-8 slide-up">
+                        FILOZÓFIA
+                    </h2>
+                    <p class="text-lg leading-relaxed slide-up" style="animation-delay: 0.1s;">
+                        A legnagyobb értéket az egyszerűségben találom. 
+                        Minden felesleges elemet eltávolítok, amíg csak a lényeg marad.
                     </p>
                 </div>
-
-                <!-- Szolgáltatás 2 -->
-                <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
-                    <div class="bg-purple-500 text-white w-16 h-16 rounded-full flex items-center justify-center mb-6 text-2xl font-bold">
-                        2
+                <div class="border-2 border-white p-12 square flex items-center justify-center slide-up" style="animation-delay: 0.2s;">
+                    <div class="text-center">
+                        <div class="display-font text-6xl mb-4">∞</div>
+                        <div class="text-sm uppercase tracking-widest">Endless Iteration</div>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4 text-gray-900">Grafikai Tervezés</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        Professzionális vizuális identitás kialakítása: logók, arculatok, 
-                        marketinganyagok tervezése, amelyek kiemelnek a versenytársak közül.
-                    </p>
                 </div>
-
-                <!-- Szolgáltatás 3 -->
-                <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
-                    <div class="bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center mb-6 text-2xl font-bold">
-                        3
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4 text-gray-900">SEO Optimalizálás</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        Weboldal láthatóságának növelése a keresőmotorokban. Kulcsszó-elemzés, 
-                        tartalomoptimalizálás és technikai SEO megoldások.
-                    </p>
-                </div>
-
             </div>
         </div>
     </section>
 
-    <!-- Kapcsolat Szekció -->
-    <section id="kapcsolat" class="py-20 bg-white">
-        <div class="container mx-auto px-6 max-w-2xl">
-            <h2 class="text-4xl font-bold text-center mb-12 text-gray-900">Lépj kapcsolatba velem</h2>
-            <form id="contactForm" class="space-y-6">
-                <div>
-                    <label for="name" class="block text-gray-700 font-semibold mb-2">Név</label>
-                    <input type="text" id="name" name="name" required 
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+    <!-- About Section -->
+    <section id="about" class="py-32 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="display-font text-5xl md:text-7xl mb-16 slide-up">
+                ABOUT ME
+            </h2>
+            <div class="space-y-8 text-lg leading-relaxed">
+                <p class="slide-up" style="animation-delay: 0.1s;">
+                    Visual designer vagyok, aki hisz abban, hogy a legjobb design láthatatlan. 
+                    Az elmúlt 8 évben globális márkákkal dolgoztam, hogy egyszerűvé tegyem 
+                    az összetett gondolatokat.
+                </p>
+                <p class="slide-up" style="animation-delay: 0.2s;">
+                    Munkásságom középpontjában a minimalista esztétika, a rendszerszemléletű 
+                    gondolkodás és a vizuális kommunikáció ereje áll. Minden projekt egy 
+                    lehetőség arra, hogy tisztaságot teremtsek a káoszból.
+                </p>
+                <p class="slide-up" style="animation-delay: 0.3s;">
+                    Ha olyan partnert keresel, aki képes egyszerűvé tenni a komplexet, 
+                    lépjünk kapcsolatba.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 px-6 border-t border-white/10">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="display-font text-5xl md:text-7xl mb-16 slide-up">
+                LET'S<br>CONNECT
+            </h2>
+            
+            <form id="contactForm" class="space-y-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="slide-up" style="animation-delay: 0.1s;">
+                        <label class="block text-sm uppercase tracking-wider mb-3 opacity-60">Név</label>
+                        <input type="text" name="name" required class="w-full p-4">
+                    </div>
+                    <div class="slide-up" style="animation-delay: 0.15s;">
+                        <label class="block text-sm uppercase tracking-wider mb-3 opacity-60">Email</label>
+                        <input type="email" name="email" required class="w-full p-4">
+                    </div>
                 </div>
                 
-                <div>
-                    <label for="email" class="block text-gray-700 font-semibold mb-2">Email</label>
-                    <input type="email" id="email" name="email" required 
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                <div class="slide-up" style="animation-delay: 0.2s;">
+                    <label class="block text-sm uppercase tracking-wider mb-3 opacity-60">Üzenet</label>
+                    <textarea name="message" rows="6" required class="w-full p-4"></textarea>
                 </div>
                 
-                <div>
-                    <label for="message" class="block text-gray-700 font-semibold mb-2">Üzenet</label>
-                    <textarea id="message" name="message" rows="5" required 
-                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"></textarea>
-                </div>
-                
-                <button type="submit" 
-                        class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition transform hover:scale-105">
-                    Üzenet küldése
+                <button type="submit" class="btn px-12 py-4 slide-up" style="animation-delay: 0.25s;">
+                    <span>Küldés</span>
                 </button>
             </form>
             
-            <div id="formMessage" class="mt-6 text-center hidden"></div>
+            <div id="formMessage" class="mt-8 text-center hidden"></div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-8">
-        <div class="container mx-auto px-6 text-center">
-            <p class="mb-4">&copy; 2024 Neved. Minden jog fenntartva.</p>
-            <div class="flex justify-center space-x-6">
-                <a href="#" class="hover:text-blue-400 transition">Facebook</a>
-                <a href="#" class="hover:text-blue-400 transition">LinkedIn</a>
-                <a href="#" class="hover:text-blue-400 transition">Instagram</a>
+    <footer class="border-t border-white/10 py-12 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="display-font text-xl">NEVED</div>
+                <div class="flex gap-8 text-sm uppercase tracking-wider">
+                    <a href="#" class="hover:opacity-60 transition">Twitter</a>
+                    <a href="#" class="hover:opacity-60 transition">Instagram</a>
+                    <a href="#" class="hover:opacity-60 transition">LinkedIn</a>
+                </div>
+                <div class="text-sm opacity-60">
+                    © 2024 — All Rights Reserved
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- JavaScript az űrlap kezeléséhez -->
     <script>
+        // Form submission
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const formMessage = document.getElementById('formMessage');
             formMessage.classList.remove('hidden');
-            formMessage.className = 'mt-6 text-center p-4 bg-green-100 text-green-700 rounded-lg';
-            formMessage.textContent = 'Köszönjük az üzenetet! Hamarosan felveszem veled a kapcsolatot.';
+            formMessage.className = 'mt-8 text-center p-6 border-2 border-white text-sm uppercase tracking-wider';
+            formMessage.textContent = 'Üzenet elküldve — Hamarosan jelentkezem';
             
-            // Űrlap ürítése
             this.reset();
             
-            // Üzenet elrejtése 5 másodperc után
             setTimeout(() => {
                 formMessage.classList.add('hidden');
             }, 5000);
         });
 
-        // Smooth scroll animáció
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -205,6 +443,25 @@
                     });
                 }
             });
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.slide-up').forEach(el => {
+            el.style.animationPlayState = 'paused';
+            observer.observe(el);
         });
     </script>
 
